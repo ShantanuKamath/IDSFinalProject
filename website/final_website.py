@@ -1,83 +1,15 @@
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+#when we import hydralit, we automatically get all of Streamlit
+import hydralit as hy
 
-st.set_page_config(layout="wide")
-st.title('This is our website title')
+app = hy.HydraApp(title='Secure Hydralit Data Explorer',favicon="💀",hide_streamlit_markers=False,use_navbar=True, navbar_sticky=True)
+@app.addapp()
+def my_home():
+ hy.info('Hello from app1')
+
+@app.addapp()
+def app2():
+ hy.info('Hello from app 2')
 
 
-
-st.markdown(
-    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">',
-    unsafe_allow_html=True,
-)
-query_params = st.experimental_get_query_params()
-tabs = ["Home", "About", "Contact"]
-if "tab" in query_params:
-    active_tab = query_params["tab"][0]
-else:
-    active_tab = "Home"
-
-if active_tab not in tabs:
-    st.experimental_set_query_params(tab="Home")
-    active_tab = "Home"
-
-li_items = "".join(
-    f"""
-    <li class="nav-item">
-        <a class="nav-link{' active' if t==active_tab else ''}" href="/?tab={t}">{t}</a>
-    </li>
-    """
-    for t in tabs
-)
-tabs_html = f"""
-    <ul class="nav nav-tabs">
-    {li_items}
-    </ul>
-"""
-
-st.markdown(tabs_html, unsafe_allow_html=True)
-st.markdown("<br>", unsafe_allow_html=True)
-
-if active_tab == "Home":
-    st.write("Welcome to my lovely page!")
-    st.write("Feel free to play with this ephemeral slider!")
-    st.slider(
-        "Does this get preserved? You bet it doesn't!",
-        min_value=0,
-        max_value=100,
-        value=50,
-    )
-elif active_tab == "About":
-    tabs = ["Home2", "About2", "Contact2"]
-    if "tab" in query_params:
-        active_tab = query_params["tab"][0]
-    else:
-        active_tab = "Home"
-
-    if active_tab not in tabs:
-        st.experimental_set_query_params(tab="Home")
-        active_tab = "Home"
-
-    li_items = "".join(
-        f"""
-        <li class="nav-item">
-            <a class="nav-link{' active' if t==active_tab else ''}" href="/?tab={t}">{t}</a>
-        </li>
-        """
-        for t in tabs
-    )
-    tabs_html = f"""
-        <ul class="nav nav-tabs">
-        {li_items}
-        </ul>
-    """
-
-    st.markdown(tabs_html, unsafe_allow_html=True)
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.write("This page was created as a hacky demo of tabs")
-elif active_tab == "Contact":
-    st.write("If you'd like to contact me, then please don't.")
-else:
-    st.error("Something has gone terribly wrong.")
+#Run the whole lot, we get navbar, state management and app isolation, all with this tiny amount of work.
+app.run()
