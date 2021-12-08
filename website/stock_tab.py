@@ -8,7 +8,6 @@ from plotly.subplots import make_subplots
 from functools import reduce
 from PIL import Image
 
-
 def stock_tab_main():
 
     dict_stock_to_company = {}
@@ -41,9 +40,9 @@ def stock_tab_main():
 
 
 
-    df_stock = pd.read_csv('../Data/DailyStockData.csv')
-    df_covid_vaccine = pd.read_csv('../Data/raw_vaccination/cleaned_vaccination_data.csv')
-    df_covid_infection = pd.read_csv('../Data/usa_national_level_daily_new_covid_cases.csv')
+    df_stock = pd.read_csv("website/../Data/DailyStockData.csv")
+    df_covid_vaccine = pd.read_csv('website/../Data/raw_vaccination/cleaned_vaccination_data.csv')
+    df_covid_infection = pd.read_csv('website/../Data/usa_national_level_daily_new_covid_cases.csv')
 
 
 
@@ -71,7 +70,7 @@ def stock_tab_main():
     ## Beginning stock page images
 
 
-    image = Image.open('../Data/images/covid_stock_teaser.jpeg')
+    image = Image.open('website/../Data/images/covid_stock_teaser.jpeg')
 
     st.image(image, width=700)
 
@@ -86,7 +85,7 @@ def stock_tab_main():
     stocks = []
     companies = []
     import glob
-    for file in glob.glob("../Companies/*"):
+    for file in glob.glob("website/../Companies/*"):
         company_name = os.path.basename(file).split(".")[0]
         companies.append(company_name)
         stock = pd.read_csv(file)
@@ -284,7 +283,7 @@ def stock_tab_main():
     st.markdown('#')
     st.markdown('#')
 
-    image = Image.open('../Data/images/covid_closed_image.jpg')
+    image = Image.open('website/../Data/images/covid_closed_image.jpg')
 
     st.image(image, width=600)
 
@@ -417,7 +416,7 @@ def stock_tab_main():
     st.markdown('#')
     st.markdown('#')
 
-    image = Image.open('../Data/images/covid_online_image.jpeg')
+    image = Image.open('website/../Data/images/covid_online_image.jpeg')
 
     st.image(image, width=600)
 
@@ -527,3 +526,6 @@ def stock_tab_main():
     # https://news.un.org/en/story/2021/05/1091182
     # https://www.trade.gov/impact-covid-pandemic-ecommerce
     # https://www.nytimes.com/2021/04/22/business/airlines-recovery-american-southwest.html
+
+if __name__ == "__main__":
+  stock_tab_main()

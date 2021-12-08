@@ -14,8 +14,8 @@ def covid_and_vaccine_visualisations():
 
     hy.header("Covid Cases Data")
 
-    country_df = pd.read_csv('../Data/usa_national_level_daily_new_covid_cases.csv')
-    state_df = pd.read_csv('../Data/usa_state_level_daily_new_covid_cases.csv')
+    country_df = pd.read_csv('website/../Data/usa_national_level_daily_new_covid_cases.csv')
+    state_df = pd.read_csv('website/../Data/usa_state_level_daily_new_covid_cases.csv')
 
     hy.subheader("Progression of covid cases with time across the US")
     fig = px.line(country_df, x="Date", y="Daily New Cases", title="Covid cases reported across the US")
@@ -75,7 +75,7 @@ def covid_and_vaccine_visualisations():
     hy.header("Covid Vaccination Data")
 
     hy.subheader("Analysis of vaccine distribution across the US")
-    df1 = pd.read_csv('../Data/covid19_vaccination_data_US_full.csv')
+    df1 = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
 
     df1 = df1[df1.Location != "US"]
     province_list = np.unique(df1['Location'].values)
@@ -120,7 +120,7 @@ def covid_and_vaccine_visualisations():
     hy.write(fig)
 
     hy.subheader("Analysis of Vaccine Distribution and Administration Across States")
-    vaccination_data = pd.read_csv('../Data/covid19_vaccination_data_US_full.csv')
+    vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
     vaccination_data_grouped = vaccination_data.groupby(['Date','Location'],as_index=False).agg({"Admin_Per_100K":"sum","Distributed":"sum","Dist_Per_100K":"sum"})
 
     data_slider = []

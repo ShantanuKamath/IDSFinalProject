@@ -1,19 +1,19 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+# import matplotlib.pyplot as plt
+# import seaborn as sns
 from PIL import Image
 
 def dataset():
-    st.set_page_config(layout="wide")
     st.title('Dataset')
 
     st.markdown("""
     In this project, we explore the effect of COVID-19 cases and vaccination on the Stock market. Hence, we work with 3 different datasets:
 
-        1. Stocks data (Yahoo! Finance)  
-        2. Covid cases data (official CDC website)  
-        3. Covid vaccination data (official CDC website)  
+    1. Stocks data (Yahoo! Finance)  
+    2. Covid cases data (official CDC website)  
+    3. Covid vaccination data (official CDC website)  
+
 
     All the 3 datasets were scrapped, explored, cleaned and then appropiately merged so that their interaction with each other could be studied. 
 
@@ -49,12 +49,12 @@ def dataset():
 
     As we wanted to explore the effect of Covid on various industries, we selected ***6*** broad categories-
 
-        - Transport  
-        - Hospitality  
-        - Consumer spending  
-        - Commerce  
-        - Online services  
-        - Airlines  
+    - Transport  
+    - Hospitality  
+    - Consumer spending  
+    - Commerce  
+    - Online services  
+    - Airlines  
 
     Further, we also wanted to study how different companies in the same instry were affected by covid. To carry out this analysis, we selected the following companies in each industry-
 
@@ -96,7 +96,16 @@ def dataset():
     The data consists of the closing stock prices (in U.S. $) of the 18 companies considered for the time duration `2019-01-02` to `2021-11-18`. 
     Let's have a look at the average statistics of the data-
 
-    |       |      AXP |      UAL |     COST |      UBER |      WMT |     ABNB |        V |    NFLX |      COUR |      HLT |       MA |      DAL |     LYFT |      MAR |       AAL |     TWTR |      ZM |     AMZN |\n|:------|---------:|---------:|---------:|----------:|---------:|---------:|---------:|--------:|----------:|---------:|---------:|---------:|---------:|---------:|----------:|---------:|--------:|---------:|\n| count | 728      | 728      | 728      | 639       | 728      | 238      | 728      | 728     | 163       | 728      | 728      | 728      | 668      | 728      | 728       | 728      | 654     |  728     |\n| mean  | 124.345  |  60.2622 | 329.085  |  40.4821  | 125.965  | 165.729  | 193.784  | 437.618 |  38.8583  | 100.85   | 306.434  |  44.6133 |  46.503  | 125.025  |  22.3287  |  44.2367 | 237.124 | 2570.91  |\n| std   |  25.9136 |  22.5993 |  69.0888 |   9.55978 |  16.5384 |  20.8198 |  27.2254 | 103.88  |   5.17739 |  20.3228 |  49.5678 |  11.2803 |  12.2703 |  22.1833 |   7.71048 |  13.5416 | 137.589 |  712.315 |\n| min   |  68.96   |  19.92   | 200.42   |  14.82    |  92.86   | 124.8    | 128.13   | 254.59  |  30.49    |  55.94   | 181.18   |  19.19   |  16.05   |  59.08   |   9.04    |  22      |  62     | 1500.28  |\n| 25%   | 104.948  |  41.6375 | 288.448  |  32.61    | 114.572  | 148.385  | 175.508  | 351.237 |  35.495   |  86.4675 | 270.948  |  38.3575 |  36.36   | 109.675  |  15.53    |  33.12   |  91.64  | 1835.26  |\n| 50%   | 119.39   |  53.455  | 312.48   |  39.96    | 124.97   | 166.48   | 195.195  | 445.32  |  38       |  96.71   | 308.695  |  45.625  |  47.945  | 130.175  |  21.57    |  39.78   | 257.265 | 2586.77  |\n| 75%   | 139.41   |  84.695  | 372.738  |  47.59    | 141.028  | 179.908  | 212.717  | 516.705 |  41.335   | 119.36   | 346.783  |  55.3225 |  56.1825 | 141.713  |  28.7325  |  54.4075 | 352.575 | 3247.42  |\n| max   | 187.08   |  95.28   | 529.37   |  63.18    | 152.79   | 216.84   | 250.93   | 691.69  |  58       | 151.84   | 395.65   |  63.16   |  78.29   | 168.39   |  36.93    |  77.63   | 568.34  | 3731.41  |
+    |       |      AXP |      UAL |     COST |      UBER |      WMT |     ABNB |        V |    NFLX |      COUR |      HLT |       MA |      DAL |     LYFT |      MAR |       AAL |     TWTR |      ZM |     AMZN | 
+    |:------|---------:|---------:|---------:|----------:|---------:|---------:|---------:|--------:|----------:|---------:|---------:|---------:|---------:|---------:|----------:|---------:|--------:|---------:|
+    | count | 728      | 728      | 728      | 639       | 728      | 238      | 728      | 728     | 163       | 728      | 728      | 728      | 668      | 728      | 728       | 728      | 654     |  728     |
+    | mean  | 124.345  |  60.2622 | 329.085  |  40.4821  | 125.965  | 165.729  | 193.784  | 437.618 |  38.8583  | 100.85   | 306.434  |  44.6133 |  46.503  | 125.025  |  22.3287  |  44.2367 | 237.124 | 2570.91  |
+    | std   |  25.9136 |  22.5993 |  69.0888 |   9.55978 |  16.5384 |  20.8198 |  27.2254 | 103.88  |   5.17739 |  20.3228 |  49.5678 |  11.2803 |  12.2703 |  22.1833 |   7.71048 |  13.5416 | 137.589 |  712.315 |
+    | min   |  68.96   |  19.92   | 200.42   |  14.82    |  92.86   | 124.8    | 128.13   | 254.59  |  30.49    |  55.94   | 181.18   |  19.19   |  16.05   |  59.08   |   9.04    |  22      |  62     | 1500.28  |
+    | 25%   | 104.948  |  41.6375 | 288.448  |  32.61    | 114.572  | 148.385  | 175.508  | 351.237 |  35.495   |  86.4675 | 270.948  |  38.3575 |  36.36   | 109.675  |  15.53    |  33.12   |  91.64  | 1835.26  |
+    | 50%   | 119.39   |  53.455  | 312.48   |  39.96    | 124.97   | 166.48   | 195.195  | 445.32  |  38       |  96.71   | 308.695  |  45.625  |  47.945  | 130.175  |  21.57    |  39.78   | 257.265 | 2586.77  |
+    | 75%   | 139.41   |  84.695  | 372.738  |  47.59    | 141.028  | 179.908  | 212.717  | 516.705 |  41.335   | 119.36   | 346.783  |  55.3225 |  56.1825 | 141.713  |  28.7325  |  54.4075 | 352.575 | 3247.42  |
+    | max   | 187.08   |  95.28   | 529.37   |  63.18    | 152.79   | 216.84   | 250.93   | 691.69  |  58       | 151.84   | 395.65   |  63.16   |  78.29   | 168.39   |  36.93    |  77.63   | 568.34  | 3731.41  |
 
     """)
     st.text("")
@@ -158,10 +167,10 @@ def dataset():
 
     Since we were only interested in anaylsing how many new covid cases were reported per day, we extracted the following fields from the downloaded dataset:
 
-        - Date: This represents the date for which the covid cases are recorded  
-        - State: This reresents which US state for which the data was recorded  
-        - Total Cases: A running total of how many positive covid cases have been recorded till date  
-        - Daily New Cases: The total number of new covid cases recorded for a particular state on a particular date  
+    - Date: This represents the date for which the covid cases are recorded  
+    - State: This reresents which US state for which the data was recorded  
+    - Total Cases: A running total of how many positive covid cases have been recorded till date  
+    - Daily New Cases: The total number of new covid cases recorded for a particular state on a particular date  
         
     """)
 
@@ -188,11 +197,11 @@ def dataset():
     st.markdown("""
     In order to preprocess this data, we -
 
-        1. Extracted the relevant fields from the data. Since we were only interested in anaylsing how many new covid cases were reported per day, we extracted the 4 columns 'Date', 'State', 'Total Cases', and 'Daily New Cases' (as described in section 2.2.) from the downloaded dataset.  
-        2. We convert the format of the Date column, to a more standardised datetime format  
-        3. We then check if there are any NaN or negative values reported. Since there are no NaN/negative values, there is no special handling to be done.  
-        4. The downloaded data also had covid statistics for different districts and federated territories of the US. Since we wanted to analyse the data of only the 50 states of the US, we removed all the rows from the data for the districts/federeated territories of American Samoa, Guam, Northern Marina Islands, Puerto Rico, US Virgin Islands, District of Columbia and Palau.  
-        5. We also aggregate the daily per state covid cases reported, so as to get the total number of covid cases reported all across the US. This aggregated data is to help us study the covid trend at a national level in the US.  
+    1. Extracted the relevant fields from the data. Since we were only interested in anaylsing how many new covid cases were reported per day, we extracted the 4 columns 'Date', 'State', 'Total Cases', and 'Daily New Cases' (as described in section 2.2.) from the downloaded dataset.  
+    2. We convert the format of the Date column, to a more standardised datetime format  
+    3. We then check if there are any NaN or negative values reported. Since there are no NaN/negative values, there is no special handling to be done.  
+    4. The downloaded data also had covid statistics for different districts and federated territories of the US. Since we wanted to analyse the data of only the 50 states of the US, we removed all the rows from the data for the districts/federeated territories of American Samoa, Guam, Northern Marina Islands, Puerto Rico, US Virgin Islands, District of Columbia and Palau.  
+    5. We also aggregate the daily per state covid cases reported, so as to get the total number of covid cases reported all across the US. This aggregated data is to help us study the covid trend at a national level in the US.  
 
 
     """)
@@ -282,6 +291,6 @@ def dataset():
     Also, as noted earlier, no modifications were made to the raw data to ensure that we don't color the subsequent analysis and inferences.
     """)
     
-  
+ 
 if __name__ == "__main__":
     dataset()
