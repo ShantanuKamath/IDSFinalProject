@@ -5,6 +5,8 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
+from gamebackend import StockGame
+from pathlib import Path
 
 company_to_ticker = {}
 company_to_ticker['United Airlines'] = 'UAL'
@@ -45,10 +47,30 @@ ticker_to_company['MA'] = 'Mastercard'
 ticker_to_company['HLT'] = 'Hilton'
 ticker_to_company['WMT'] = 'Walmart'
 
+
+
+def insert_entry(leaderboard,nickname,submission_time, profit):
+    temp = pd.DataFrame([{'nickname':nickname,'submission time':submission_time,'profit': profit}])
+    frames = [leaderboard,temp]
+    leaderboard=pd.concat(frames)
+    leaderboard.sort_values(by='profit', ascending=False,inplace=True)
+    leaderboard.to_csv('leaderboard.csv',index= False)
+   
+
+
 def init_game():
     st.title("The Game")
+    my_file = Path("./leaderboard.csv")
+    leaderboard = None
+    if my_file.is_file():
+        leaderboard = pd.read_csv('leaderboard.csv')
+    else:
+        column_names = ["nickname",'submission time', "profit"]
+        leaderboard = pd.DataFrame(columns = column_names)
+
     username = st.text_input("Enter nickname", )
     selected_stocks = None
+    game = StockGame()
 
     if username:
         st.subheader(f"Okay {username}, Do you wanna make some money?")
@@ -86,7 +108,7 @@ def init_game():
             cols = st.columns(7)
             if cols[3].button("Show results"):
                 amounts = list(map(int, amounts))
-                compute_results(username, selected_stocks, dates, amounts)
+                compute_results(leaderboard, game,username, selected_stocks, dates, amounts)
 
 
 if __name__ == "__main__":
@@ -126,17 +148,16 @@ def show_stocks_trend(stocks, dates=None):
     fig.append_trace(fig2.data[0], row=2, col=1)
     fig.append_trace(fig3.data[0], row=3, col=1)
 
-
     fig.update_layout(height=500)
     st.plotly_chart(fig, use_container_width=True)
 
-def compute_results(username, stocks, dates, amounts):
+
+def compute_results(leaderboard, game,username, stocks, dates, amounts):
     st.balloons()
     profits = []
-    tickers_start = [100,200,300,400]
-    tickers_end = [120,210,240,230]
-    
-    st.title("Individual outcomes")
+    maximal_stock_price, minimal_stock_price, buy_date, sell_date, max_profit  = game.compute_optimal_profits(stocks,amounts)
+    tickers_start, tickers_end = game.compute_user_outcomes(stocks,dates)
+    st.title("Your outcome")
     cols = st.columns(len(stocks))
     for i in range(len(stocks)):
         cols[i].subheader(stocks[i])
@@ -147,18 +168,55 @@ def compute_results(username, stocks, dates, amounts):
         profits.append(tickers_end[i]*unit_share-amounts[i])
         cols[i].metric(label="Your Sell Price", value="{:.2f}".format(tickers_end[i]*unit_share), delta="{:.2f}".format(profits[i]))
     cols = st.columns(7)
+    user_profit = sum(profits)
+
+    if user_profit>=0:
+        cols[3].metric(label="Total Profit", value="{:.2f}$".format(user_profit))
+    else:
+        cols[3].metric(label="Total Loss", value="{:.2f}$".format(user_profit))
+
+    st.title("Optimal outcome")
+    st.subheader("You could have made a profit of  {:.2f}$ if you had bought the stock on ".format(max_profit)+buy_date+" and sold on "+sell_date+" !")
+    cols = st.columns(len(stocks))
+    profits = []
+    for i in range(len(stocks)):
+        cols[i].subheader(stocks[i])
+        cols[i].metric(label="Stock Closing Price", value="{:.2f}".format(maximal_stock_price[i]), delta="{:.2f} %".format((maximal_stock_price[i]-minimal_stock_price[i])*100/minimal_stock_price[i]))
+        unit_share = amounts[i]/minimal_stock_price[i]
+        cols[i].metric(label="No. of Shares", value="{:.3f}".format(unit_share))
+        cols[i].metric(label="Your Cost Price", value="{:.2f}".format(minimal_stock_price[i]*unit_share))
+        profits.append(maximal_stock_price[i]*unit_share-amounts[i])
+        cols[i].metric(label="Your Sell Price", value="{:.2f}".format(maximal_stock_price[i]*unit_share), delta="{:.2f}".format(profits[i]))
+    cols = st.columns(7)
     total_profit = sum(profits)
-    cols[3].metric(label="Total Profit", value="{}".format(total_profit))
-    rank, percentile = get_leaderboard_info(username, total_profit)
+    if total_profit>=0:
+        cols[3].metric(label="Total Profit", value="{:.2f}$".format(total_profit))
+    else:
+        cols[3].metric(label="Total Loss", value="{:.2f}$".format(total_profit))
+    
+    now = datetime.now()
+    submission_time = now.strftime("%d/%m/%Y %H:%M:%S")
+    insert_entry(leaderboard,username,submission_time, user_profit)    
+    rank, percentile = get_leaderboard_info(username,submission_time, total_profit)
     st.subheader("You did better than {:.2f} % other gamers!".format(percentile))
     st.subheader("This gives you a rank of {} on the leader board!".format(rank))
     cols = st.columns(7)
-     
+
     display_leaderboard()
 
-def get_leaderboard_info(username, profit):
-    return 2, 85
+
+def get_leaderboard_info(username,submission_time, profit):
+    leaderboard = pd.read_csv('leaderboard.csv')
+    rank = leaderboard[leaderboard["submission time"]==submission_time].index.values[0]
+    total = len(leaderboard["submission time"].values)
+    count = total - rank -1
+    percentile = count*100//(total-1) if total!=1 else 100
+    print(percentile)
+    return rank+1, percentile
     
 def display_leaderboard():
-    df = pd.DataFrame(np.random.randn(10, 5),columns=('col %d' % i for i in range(5)))
-    st.table(df)
+    my_file = Path("./leaderboard.csv")
+    leaderboard = None
+    if my_file.is_file():
+        leaderboard = pd.read_csv('leaderboard.csv')
+        st.table(leaderboard[['nickname','submission time','profit']])
