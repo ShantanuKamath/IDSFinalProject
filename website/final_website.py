@@ -6,6 +6,7 @@ import stock_tab
 import dataset
 import covid_visualisations
 import vaccine_visualisations
+import home
 
 #make it look nice from the start
 st.set_page_config(layout='wide',initial_sidebar_state='collapsed')
@@ -39,3 +40,5 @@ elif menu_id ==  'covid':
     covid_visualisations.covid_visualisations()
 elif menu_id ==  'vaccine':
     vaccine_visualisations.vaccine_visualisations()
+elif menu_id ==  'home':
+    home.home()
