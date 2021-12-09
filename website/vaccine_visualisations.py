@@ -63,9 +63,8 @@ def vaccine_visualisations():
                     yaxis_range=[0,200000],
                     yaxis={"visible":True})
 
-    st.write(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)   
     st.markdown("""From this plot, we can clearly see that the Republic of Palau (RP) (which falls in the U.S. Pacific Islands) has the highest number of total vaccine doses administered per 100K population, followed by Vermont, and Puerto Rico. Marshall Islands (MH) and Federated States of Micronesia (FM) have the lowest numbers.""")
-
     st.text("")
     st.subheader("Analysis of Vaccine Administration Progress Across States")
     vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
@@ -94,7 +93,7 @@ def vaccine_visualisations():
     layout = dict(title ='Vaccination Administration Progress', geo=dict(scope='usa',projection={'type': 'albers usa'}),
                 sliders=sliders)
     fig =  go.Figure(data=data_slider, layout=layout)
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)   
     st.markdown("""From this visualisation we are able to see that the vaccine administration was far more rapid in states such as Texas and North Dakota initially. A historical analysis reveals that Texas was infact the first state to reach 1 million vaccinations. Over time we see the vaccination rate across other states such as California and New York picking up while the vaccination rate across states that demonstrated early gains deteriorates""")
     st.markdown("""
       <b><span style="font-size: 115%; color:#D71806">Interesting Articles:</span></b> <br>

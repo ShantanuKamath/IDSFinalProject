@@ -25,7 +25,8 @@ def covid_visualisations():
     st.subheader("How severe was the pandemic anyway?")
     st.markdown("""In order to see how badly the United States was affected by covid, we plotted a progression of covid cases with time arcoss the US""")
     fig = px.line(country_df, x="Date", y="Daily New Cases", title="Covid cases reported across the US")
-    st.write(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)   
+    
     st.markdown("""From this graph we were able to clearly visualise that there were 2 waves of covid that had hit the US. 
     
 - The first wave starts its upward trend around 12th October, 2020. It is in its peak from 20th November 2020 to 22nd January 2021, and subsides by 18th February, 2021.
@@ -41,7 +42,7 @@ For this we plotted a bar chart to visualise the total covid cases per state."""
     state_cumulative = state_cumulative.rename(columns={"Daily New Cases": "Total Cases"})
     state_cumulative.sort_values('Total Cases', axis=0, ascending=True, inplace=True)
     fig = px.bar(state_cumulative, x='State', y='Total Cases')
-    st.write(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)    
     st.markdown("""From this barchart we were able to see that the state with the most number of covid cases was California, with 4.83 million cases. And the state with the least number of covid cases was Vermont with 43K cases.""")
 
     st.text("")
@@ -86,7 +87,7 @@ For this we plotted a bar chart to visualise the total covid cases per state."""
                     yaxis_range=[0,61017],
                     yaxis={"visible":True})
 
-    st.write(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True)   
     st.markdown("""From this visualisation we were able to see that the covid trends were pretty uniform across the different states. While their timelines were
     almost the same, some states were affected more than others. """)
 
