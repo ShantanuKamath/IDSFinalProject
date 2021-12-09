@@ -104,7 +104,7 @@ def stock_tab_main():
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig1.data:
         fig.append_trace(tmp, row=1, col=1)
@@ -141,7 +141,7 @@ def stock_tab_main():
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig1.data:
         fig.append_trace(tmp, row=1, col=1)
@@ -165,7 +165,7 @@ def stock_tab_main():
     image = Image.open('website/artifacts/covid_transport_image.jpeg')
     
     st.markdown('#')
-    newsize = (600, 400)
+    newsize = (500, 330)
     col1, col2, col3 = st.columns([2,6,1])
 
     with col1:
@@ -190,7 +190,7 @@ def stock_tab_main():
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig1.data:
         fig.append_trace(tmp, row=1, col=1)
@@ -266,7 +266,7 @@ def stock_tab_main():
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig1.data:
         fig.append_trace(tmp, row=1, col=1)
@@ -350,7 +350,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig1.data:
         fig.append_trace(tmp, row=1, col=1)
@@ -419,7 +419,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig0.data:
         fig.append_trace(tmp, row=1, col=1)
@@ -514,7 +514,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig1.data:
         fig.append_trace(tmp, row=1, col=1)
@@ -582,7 +582,7 @@ Yet, overall the online services have greatly increased their overall value comp
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
 
     for tmp in fig1.data:
         fig.append_trace(tmp, row=1, col=1)
