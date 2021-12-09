@@ -9,6 +9,12 @@ import IPython.display
 from IPython.display import display, clear_output
 from datetime import date, datetime
 
+@st.cache
+def read_data():
+    df1 = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
+    df1 = df1[df1.Location != "US"]
+    return df1
+
 def vaccine_visualisations():
     st.header("Vaccination Distribution")
 
@@ -21,9 +27,8 @@ def vaccine_visualisations():
 
     st.text("")
     st.subheader("Analysis of vaccine distribution across the US")
-    df1 = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
+    df1 = read_data()
 
-    df1 = df1[df1.Location != "US"]
     province_list = np.unique(df1['Location'].values)
 
     prov = st.selectbox('Enter a primary state',province_list, index=0)

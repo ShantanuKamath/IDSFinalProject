@@ -10,6 +10,16 @@ import IPython.display
 from IPython.display import display, clear_output
 from datetime import date, datetime
 
+@st.cache
+def read_country_data():
+    country_df = pd.read_csv('website/../Data/usa_national_level_daily_new_covid_cases.csv')
+    return country_df
+
+@st.cache
+def read_state_data():
+    state_df = pd.read_csv('website/../Data/usa_state_level_daily_new_covid_cases.csv')
+    return state_df
+
 def covid_visualisations():
 
     st.header("Progression of Covid in the US")
@@ -18,8 +28,8 @@ def covid_visualisations():
     st.markdown("Having an understanding of the severity of the covid cases in the US, helps us reason about any changes in the stock market that we may observe.")
 
 
-    country_df = pd.read_csv('website/../Data/usa_national_level_daily_new_covid_cases.csv')
-    state_df = pd.read_csv('website/../Data/usa_state_level_daily_new_covid_cases.csv')
+    country_df = read_country_data()
+    state_df = read_state_data()
 
     st.text("")
     st.subheader("How severe was the pandemic anyway?")
