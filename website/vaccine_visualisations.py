@@ -18,11 +18,6 @@ def read_data():
 @st.cache
 def read_vaccination_data():
     vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
-    return vaccination_data
-
-@st.cache
-def draw_choropleth():
-    vaccination_data = read_vaccination_data()
     vaccination_data_grouped = vaccination_data.groupby(['Date','Location'],as_index=False).agg({"Admin_Per_100K":"sum","Distributed":"sum","Dist_Per_100K":"sum"})
 
     data_slider = []
@@ -44,6 +39,12 @@ def draw_choropleth():
         step['args'][1][i] = True
         steps.append(step)
 
+    return vaccination_data, dates_range, data_slider, steps
+
+@st.cache
+def draw_choropleth():
+    vaccination_data, dates_range, data_slider, steps = read_vaccination_data()
+    
     sliders = [dict(active=0, pad={"t": 1}, steps=steps)]
     layout = dict(title ='Vaccination Administration Progress', geo=dict(scope='usa',projection={'type': 'albers usa'}),
                 sliders=sliders)
