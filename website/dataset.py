@@ -5,6 +5,7 @@ import pandas as pd
 from PIL import Image
 
 def dataset():
+
     st.title('Dataset')
 
     st.markdown("""
@@ -28,6 +29,8 @@ def dataset():
     To ensure accurate and un-altered data, stock information was directly taken from [Yahoo! Finance](https://finance.yahoo.com/).
     Yahoo! Finance provides an easy interface to download stock information as a CSV based on basic parameters like Time period and frequency. A snippet of the webpage used for download process is shown in the figure below.
     """)
+
+    newsize = (500, 330)
 
     col1, col2, col3 = st.columns([2,6,1])
 
@@ -84,6 +87,7 @@ def dataset():
 
     with col2:
         image = Image.open('website/artifacts/stock_market_1.jpeg')
+        # image = image.resize(newsize)
         st.image(image, caption='Covid had a huge impact on the stock market. But were all sectors equally affected?')
 
     with col3:
@@ -141,24 +145,32 @@ def dataset():
     This covid data for the US was fetched from the [official CDC website](https://data.cdc.gov/Case-Surveillance/United-States-COVID-19-Cases-and-Deaths-by-State-o/9mfq-cb36). This was prefered over other sources (which provide processed and cleaned data) because of it's accountability. We wanted to choose the most reliable source so that our analysis reflects the actual ground situation.
     """)
 
+    st.write("")
+    st.write("")
+
     col1, col2, col3, col4 = st.columns([1, 5, 5, 1])
+    
+    st.write("")
 
     with col1:
         st.write("")
 
     with col2:
         image = Image.open('website/artifacts/covid_cases_4.jpg')
+        image = image.resize(newsize)
         st.image(image, caption='Covid testing and isolation was the only way forward')
         
     with col3:
         image = Image.open('website/artifacts/covid_cases.png')
-        st.write("")
-        st.write("")
+        image = image.resize(newsize)
+        # st.write("")
+        # st.write("")
         st.image(image, caption='Many people lost their near and dear ones to covid')
         
     with col4:
         st.write("")
 
+    st.write("")
         
     st.markdown('### 2.2 Data description')
     st.markdown("""
@@ -174,19 +186,27 @@ def dataset():
         
     """)
 
+    st.write("")
+    st.write("")
+    
     col1, col2, col3, col4 = st.columns([1, 5, 5, 1])
+
+    st.write("")
+    
 
     with col1:
         st.write("")
 
     with col2:
         image = Image.open('website/artifacts/covid_cases_1.jpg')
-        st.write("")
-        st.write("")
+        image = image.resize((500, 352))
+        # st.write("")
+        # st.write("")
         st.image(image, caption='Masks became a new norm')
 
     with col3:
         image = Image.open('website/artifacts/covid_cases_2.jpg')
+        image = image.resize(newsize)
         st.image(image, caption='Lockdown was necessary to curb the spread of covid, but that had unpredicted implications.')
         
     with col4:
@@ -217,19 +237,25 @@ def dataset():
     Like with covid cases data, this was prefered over other sources (like Kaggle, which is much easier to access) because of it's reliability. 
     """)
 
+    st.write("")
+    st.write("")
+    
     col1, col2, col3, col4 = st.columns([1, 5, 5, 1])
-
+    st.write("")
+    
     with col1:
         st.write("")
 
     with col2:
         image = Image.open('website/artifacts/vaccine1.webp')
-        st.write("")
-        st.write("")
+        image = image.resize(newsize)
+        # st.write("")
+        # st.write("")
         st.image(image, caption='Vaccination camps were set-up to ensure rapid coverage of people.')
         
     with col3:
         image = Image.open('website/artifacts/vaccine2.webp')
+        image = image.resize((500, 330))
         st.image(image, caption='US was amongst the first countries to start the vaccination process.')
         
     with col4:
@@ -245,20 +271,25 @@ def dataset():
 
     Apart from that, not much data cleaning was required since the data is well populated and does not have any anomalies like NaN or Null values.
     """)
+    st.write("")
+    st.write("")
+    
     col1, col2, col3, col4 = st.columns([1, 5, 5, 1])
-
+    st.write("")
+    
     with col1:
         st.write("")
 
     with col2:
         image = Image.open('website/artifacts/vaccine3.webp')
-
+        image = image.resize(newsize)
         st.image(image, caption='Innovative ideas like drive-through vaccination were implemented to reach out to more people')
         
     with col3:
         image = Image.open('website/artifacts/vaccine_4.jpg')
-        st.write("")
-        st.write("")
+        image = image.resize((500, 353))
+        # st.write("")
+        # st.write("")
         st.image(image, caption='But not all citizens were ready to take the vaccine.')
         
     with col4:
