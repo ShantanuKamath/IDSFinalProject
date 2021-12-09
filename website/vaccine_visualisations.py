@@ -15,6 +15,36 @@ def read_data():
     df1 = df1[df1.Location != "US"]
     return df1
 
+@st.cache
+def draw_choropleth():
+    vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
+    vaccination_data_grouped = vaccination_data.groupby(['Date','Location'],as_index=False).agg({"Admin_Per_100K":"sum","Distributed":"sum","Dist_Per_100K":"sum"})
+
+    data_slider = []
+    dates_range = []
+    for date in sorted(vaccination_data_grouped['Date'].unique(),key=lambda date: datetime.strptime(date, "%m/%d/%Y")):
+        df_split =  vaccination_data_grouped[(vaccination_data_grouped['Date']== date)]
+        data_each_date = dict(type='choropleth',locations = df_split['Location'],
+                            z=df_split['Admin_Per_100K'],
+                            locationmode='USA-states',
+                            colorbar= {'title':'Doses Administered per 100K'})
+        data_slider.append(data_each_date)
+        dates_range.append(date)
+            
+    steps = []
+    for i in range(len(data_slider)):
+        step = dict(method='restyle',
+                    args=['visible', [False] * len(data_slider)],
+                    label='Date {}'.format(dates_range[i]))
+        step['args'][1][i] = True
+        steps.append(step)
+
+    sliders = [dict(active=0, pad={"t": 1}, steps=steps)]
+    layout = dict(title ='Vaccination Administration Progress', geo=dict(scope='usa',projection={'type': 'albers usa'}),
+                sliders=sliders)
+    fig =  go.Figure(data=data_slider, layout=layout)
+    return fig
+
 def vaccine_visualisations():
     st.header("Vaccination Distribution")
 
@@ -72,32 +102,9 @@ def vaccine_visualisations():
     st.markdown("""From this plot, we can clearly see that the Republic of Palau (RP) (which falls in the U.S. Pacific Islands) has the highest number of total vaccine doses administered per 100K population, followed by Vermont, and Puerto Rico. Marshall Islands (MH) and Federated States of Micronesia (FM) have the lowest numbers.""")
     st.text("")
     st.subheader("Analysis of Vaccine Administration Progress Across States")
-    vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
-    vaccination_data_grouped = vaccination_data.groupby(['Date','Location'],as_index=False).agg({"Admin_Per_100K":"sum","Distributed":"sum","Dist_Per_100K":"sum"})
-
-    data_slider = []
-    dates_range = []
-    for date in sorted(vaccination_data_grouped['Date'].unique(),key=lambda date: datetime.strptime(date, "%m/%d/%Y")):
-        df_split =  vaccination_data_grouped[(vaccination_data_grouped['Date']== date)]
-        data_each_date = dict(type='choropleth',locations = df_split['Location'],
-                            z=df_split['Admin_Per_100K'],
-                            locationmode='USA-states',
-                            colorbar= {'title':'Doses Administered per 100K'})
-        data_slider.append(data_each_date)
-        dates_range.append(date)
-            
-    steps = []
-    for i in range(len(data_slider)):
-        step = dict(method='restyle',
-                    args=['visible', [False] * len(data_slider)],
-                    label='Date {}'.format(dates_range[i]))
-        step['args'][1][i] = True
-        steps.append(step)
-
-    sliders = [dict(active=0, pad={"t": 1}, steps=steps)]
-    layout = dict(title ='Vaccination Administration Progress', geo=dict(scope='usa',projection={'type': 'albers usa'}),
-                sliders=sliders)
-    fig =  go.Figure(data=data_slider, layout=layout)
+    
+    fig = draw_choropleth()
+    
     st.plotly_chart(fig, use_container_width=True)   
     st.markdown("""From this visualisation we are able to see that the vaccine administration was far more rapid in states such as Texas and North Dakota initially. A historical analysis reveals that Texas was infact the first state to reach 1 million vaccinations. Over time we see the vaccination rate across other states such as California and New York picking up while the vaccination rate across states that demonstrated early gains deteriorates""")
     st.markdown("""
