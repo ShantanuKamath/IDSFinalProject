@@ -4,7 +4,8 @@ import datetime
 import game
 import stock_tab
 import dataset
-import covid_and_vaccine_visualisations
+import covid_visualisations
+import vaccine_visualisations
 
 #make it look nice from the start
 st.set_page_config(layout='wide',initial_sidebar_state='collapsed')
@@ -15,7 +16,7 @@ menu_data = [
     {'id':'dataset','icon':"fas fa-table",'label':"Dataset"},
     {'id':'visualization','icon':"fas fa-chart-bar",'label':"Visualizations"},
     {'id':'game','icon':"fas fa-gamepad",'label':"Game"},
-    {'icon': "fas fa-caret-down",'label':"Visualizations", 'submenu':[{'id':'vacc','icon': "fa fa-paperclip", 'label':"Covid and Vaccines"},{'id':'stock','icon': "💀", 'label':"Impact on Stock Market"},{'id':'subid13','icon': "fa fa-database", 'label':"Sub-item 3"}]},
+    {'icon': "fas fa-caret-down",'label':"Visualizations", 'submenu':[{'id':'covid','icon': "fa fa-paperclip", 'label':"Covid"},{'id':'vaccine','icon': "fa fa-paperclip", 'label':"Vaccine"},{'id':'stock','icon': "💀", 'label':"Impact on Stock Market"}]},
     # {'icon': "far fa-chart-bar", 'label':"Chart"},#no tooltip message
     # {'id':' Crazy return value 💀','icon': "💀", 'label':"Calendar"},
     # {'icon': "fas fa-tachometer-alt", 'label':"Dashboard",'ttip':"I'm the Dashboard tooltip!"} #can add a tooltip message
@@ -46,5 +47,7 @@ elif menu_id ==  'stock':
     stock_tab.stock_tab_main()
 elif menu_id ==  'dataset':
     dataset.dataset()
-elif menu_id ==  'vacc':
-    covid_and_vaccine_visualisations.covid_and_vaccine_visualisations()
+elif menu_id ==  'covid':
+    covid_visualisations.covid_visualisations()
+elif menu_id ==  'vaccine':
+    vaccine_visualisations.vaccine_visualisations()
