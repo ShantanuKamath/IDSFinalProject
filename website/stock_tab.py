@@ -82,6 +82,11 @@ def stock_tab_main():
     st.markdown('#')
     st.markdown('<h2>Stock Performance in Covid Times</h2>',unsafe_allow_html=True)
 
+    st.markdown('#')
+    
+    cols = st.columns(3)
+    cols[1].markdown("![Alt Text](https://media.giphy.com/media/y31rRE5h3wyPXey8vx/giphy.gif)")
+
     stocks = []
     companies = []
     import glob
