@@ -17,8 +17,8 @@ def covid_visualisations():
     hy.markdown("Having an understanding of the severity of the covid cases in the US, helps us reason about any changes in the stock market that we may observe.")
 
 
-    country_df = pd.read_csv('../Data/usa_national_level_daily_new_covid_cases.csv')
-    state_df = pd.read_csv('../Data/usa_state_level_daily_new_covid_cases.csv')
+    country_df = pd.read_csv('website/../Data/usa_national_level_daily_new_covid_cases.csv')
+    state_df = pd.read_csv('website/../Data/usa_state_level_daily_new_covid_cases.csv')
 
     hy.subheader("How severe was the pandemic anyway?")
     hy.markdown("""In order to see how badly the United States was affected by covid, we plotted a progression of covid cases with time arcoss the US""")

@@ -59,7 +59,7 @@ def insert_entry(leaderboard,nickname,submission_time, profit):
 
 
 def init_game():
-    st.title("The Game")
+    st.title("Market Simulator")
     my_file = Path("./leaderboard.csv")
     leaderboard = None
     if my_file.is_file():
@@ -115,11 +115,17 @@ if __name__ == "__main__":
     init_game()
 
 def show_stocks_trend(stocks, dates=None, st_object=None):
+    
+    if dates:
+        buy_date, sell_date = dates
     tickers = list(map(company_to_ticker.get, stocks))
     df_stock = pd.read_csv('website/../Data/DailyStockData.csv')
     df_covid_vaccine = pd.read_csv('website/../Data/raw_vaccination/cleaned_vaccination_data.csv')
     df_covid_infection = pd.read_csv('website/../Data/usa_national_level_daily_new_covid_cases.csv')
     # Merging data to align time
+    
+
+
 
     df_covid_infection = df_covid_infection[["Date", "Daily New Cases"]]
     df_covid_vaccine = df_covid_vaccine[['date', 'daily_vaccinations']].rename(columns={"date": "Date", "daily_vaccinations": "Number of People Vaccinated Daily"})
@@ -129,6 +135,11 @@ def show_stocks_trend(stocks, dates=None, st_object=None):
     merged_data = df_stock.merge(df_covid_vaccine, how='outer', left_index=True, right_index=True)
     merged_data = merged_data.tail(569)
     merged_data = merged_data.merge(df_covid_infection, how='outer', left_index=True, right_index=True).reset_index()
+
+
+    if dates:
+        merged_data = merged_data[merged_data['Date'].between(buy_date,sell_date)]
+       
 
     fig = make_subplots(rows=3, cols=1, subplot_titles=('Industry stock prices',  'Daily New Cases', 'Number of People Vaccinated Daily'), row_width=[0.3,0.3, 0.7])
 
@@ -156,10 +167,15 @@ def show_stocks_trend(stocks, dates=None, st_object=None):
 
 def compute_results(leaderboard, game,username, stocks, dates, amounts):
     st.balloons()
-    profits = []
+    
     maximal_stock_price, minimal_stock_price, buy_date, sell_date, max_profit  = game.compute_optimal_profits(stocks,amounts)
     tickers_start, tickers_end = game.compute_user_outcomes(stocks,dates)
     st.title("Your outcome")
+    profits = []
+    user_buy_date, user_sell_date = dates
+    user_buy_date_str = user_buy_date.strftime("%Y-%m-%d")
+    user_sell_date_str = user_sell_date.strftime("%Y-%m-%d")
+    user_dates = (user_buy_date_str,user_sell_date_str)
     cols = st.columns([1 for _ in stocks]+[len(stocks)])
     for i in range(len(stocks)):
         cols[i].write(stocks[i])
@@ -170,7 +186,7 @@ def compute_results(leaderboard, game,username, stocks, dates, amounts):
         profits.append(tickers_end[i]*unit_share-amounts[i])
         cols[i].metric(label="Your Sell Price", value="{:.2f}".format(tickers_end[i]*unit_share), delta="{:.2f}".format(profits[i]))
 
-    show_stocks_trend(stocks, None, cols[-1])
+    show_stocks_trend(stocks, user_dates, cols[-1])
     cols = st.columns(7)
     user_profit = sum(profits)
 
@@ -179,10 +195,11 @@ def compute_results(leaderboard, game,username, stocks, dates, amounts):
     else:
         cols[3].metric(label="Total Loss", value="{:.2f}$".format(user_profit))
 
-    st.title("Optimal outcome")
+    st.title("Machine outcome")
     st.subheader("You could have made a profit of  {:.2f}$ if you had bought the stock on ".format(max_profit)+buy_date+" and sold on "+sell_date+" !")
     cols = st.columns([len(stocks)]+[1 for _ in stocks])
     profits = []
+    optimal_dates = (buy_date, sell_date)
     for i in range(len(stocks)):
         cols[i+1].subheader(stocks[i])
         cols[i+1].metric(label="Stock Closing Price", value="{:.2f}".format(maximal_stock_price[i]), delta="{:.2f} %".format((maximal_stock_price[i]-minimal_stock_price[i])*100/minimal_stock_price[i]))
@@ -191,7 +208,7 @@ def compute_results(leaderboard, game,username, stocks, dates, amounts):
         cols[i+1].metric(label="Your Cost Price", value="{:.2f}".format(minimal_stock_price[i]*unit_share))
         profits.append(maximal_stock_price[i]*unit_share-amounts[i])
         cols[i+1].metric(label="Your Sell Price", value="{:.2f}".format(maximal_stock_price[i]*unit_share), delta="{:.2f}".format(profits[i]))
-    show_stocks_trend(stocks, None, cols[0])
+    show_stocks_trend(stocks, optimal_dates, cols[0])
     cols = st.columns(7)
     total_profit = sum(profits)
     if total_profit>=0:

@@ -17,7 +17,7 @@ def vaccine_visualisations():
     In order to do this we compared between the vaccine administration per 100K population between two states""")
 
     hy.subheader("Analysis of vaccine distribution across the US")
-    df1 = pd.read_csv('../Data/covid19_vaccination_data_US_full.csv')
+    df1 = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
 
     df1 = df1[df1.Location != "US"]
     province_list = np.unique(df1['Location'].values)
@@ -63,7 +63,7 @@ def vaccine_visualisations():
     hy.markdown("""From this plot, we can clearly see that the Republic of Palau (RP) (which falls in the U.S. Pacific Islands) has the highest number of total vaccine doses administered per 100K population, followed by Vermont, and Puerto Rico. Marshall Islands (MH) and Federated States of Micronesia (FM) have the lowest numbers.""")
 
     hy.subheader("Analysis of Vaccine Administration Progress Across States")
-    vaccination_data = pd.read_csv('../Data/covid19_vaccination_data_US_full.csv')
+    vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
     vaccination_data_grouped = vaccination_data.groupby(['Date','Location'],as_index=False).agg({"Admin_Per_100K":"sum","Distributed":"sum","Dist_Per_100K":"sum"})
 
     data_slider = []

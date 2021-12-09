@@ -6,6 +6,8 @@ from datetime import timedelta
 class StockGame:
     def __init__(self):
         self.stock_data = pd.read_csv('website/../Data/DailyStockData.csv')
+
+        #self.stock_data = self.stock_data[self.stock_data ['Date'].between(99, 101)]
         self.company_to_ticker = {}
         self.company_to_ticker['United Airlines'] = 'UAL'
         self.company_to_ticker['Visa'] =  'V'
@@ -25,6 +27,10 @@ class StockGame:
         self.company_to_ticker['Mastercard'] =  'MA'
         self.company_to_ticker['Hilton'] =  'HLT'
         self.company_to_ticker['Walmart'] =  'WMT'
+        self.min_value = datetime(2019, 12, 31).strftime("%Y-%m-%d")
+        self.max_value = datetime(2021, 11, 17).strftime("%Y-%m-%d")
+        self.stock_data = self.stock_data[self.stock_data ['Date'].between(self.min_value, self.max_value)]
+
 
 
     def compute_optimal_profits(self,stocks,amounts):
@@ -54,6 +60,8 @@ class StockGame:
         
         buy_date = self.stock_data['Date'].iloc[point_at_min_profit]
         sell_date = self.stock_data['Date'].iloc[point_at_max_profit]
+
+       
 
         return maximal_stock_prices, minimal_stock_prices, buy_date, sell_date, max_profit
 
