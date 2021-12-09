@@ -68,11 +68,11 @@ def stock_tab_main():
 
 
     ## Beginning stock page images
-
-
+    teaser_size = (1600, 400)
     image = Image.open('website/artifacts/covid_stock_teaser.jpeg')
-
-    st.image(image, use_column_width='always', caption='How the stock market plummeted due to covid.')
+    image = image.resize(teaser_size)
+    
+    st.image(image)
 
 
 
@@ -80,7 +80,7 @@ def stock_tab_main():
     ## Adding basic stock performance
 
     st.markdown('#')
-    st.markdown('<h2><span style="color:#083CA5">Stock Performance in Covid Times</span></h2>',unsafe_allow_html=True)
+    st.markdown('<h2>Stock Performance in Covid Times</h2>',unsafe_allow_html=True)
 
     stocks = []
     companies = []
@@ -114,7 +114,7 @@ def stock_tab_main():
 
     fig.update_layout(height=700, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
 
     st.markdown(""" * Amazon stock values operate at a much higher scale than the rest of the stocks.
@@ -151,7 +151,7 @@ def stock_tab_main():
 
     fig.update_layout(height=700, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown(""" * Its easy to quickly realize that almost all of the stocks, that is the market, fell during the week of March 2nd, 2020.
 
@@ -161,17 +161,18 @@ def stock_tab_main():
 
 
     st.markdown('#')
-    st.markdown('<h2><span style="color:#083CA5">Transport Sector</span></h2>',unsafe_allow_html=True)
+    st.markdown('<h2>Transport Sector</h2>',unsafe_allow_html=True)
     image = Image.open('website/artifacts/covid_transport_image.jpeg')
     
     st.markdown('#')
-
+    newsize = (600, 400)
     col1, col2, col3 = st.columns([2,6,1])
 
     with col1:
         st.write("")
 
     with col2:
+        image = image.resize(newsize)
         st.image(image, caption='Empty roads due to covid lockdowns.')
 
     with col3:
@@ -199,7 +200,7 @@ def stock_tab_main():
 
     fig.update_layout(height=700, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('#### How has the transport industry reponsed to Covid-19?')
     st.markdown("""
@@ -238,7 +239,7 @@ def stock_tab_main():
 
 
     st.markdown('#')
-    st.markdown('<h2><span style="color:#083CA5">Hospitality Sector</span></h2>',unsafe_allow_html=True)
+    st.markdown('<h2>Hospitality Sector</h2>',unsafe_allow_html=True)
     image = Image.open('website/artifacts/covid_hospitality_image.jpeg')
     
     st.markdown('#')
@@ -275,7 +276,7 @@ def stock_tab_main():
 
     fig.update_layout(height=700, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('#### The pandemic meant that people couldn\'t move out of their homes...This must have hurt the hospitality sector really badly :(')
 
@@ -321,7 +322,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
 
 
     st.markdown('#')
-    st.markdown('<h2><span style="color:#083CA5">Consumer Spending</span></h2>',unsafe_allow_html=True)
+    st.markdown('<h2>Consumer Spending</h2>',unsafe_allow_html=True)
 
     image = Image.open('website/artifacts/covid_closed_image.jpg')
     st.markdown('#')
@@ -332,6 +333,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
         st.write("")
 
     with col2:
+        image = image.resize(newsize)
         st.image(image, caption='How covid led to businesses shutting down.')
 
     with col3:
@@ -358,7 +360,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
 
     fig.update_layout(height=700, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('#### How was spending impacted due to Covid, and how is it shaping up with vaccination and the gradual decrease in cases?')
 
@@ -385,7 +387,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
 
 
     st.markdown('#')
-    st.markdown('<h2><span style="color:#083CA5">E-Commerce Sector</span></h2>',unsafe_allow_html=True)
+    st.markdown('<h2>E-Commerce Sector</h2>',unsafe_allow_html=True)
     image = Image.open('website/artifacts/covid_ecommerce_image.jpeg')
     
     st.markdown('#')
@@ -396,6 +398,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
         st.write("")
 
     with col2:
+        image = image.resize(newsize)
         st.image(image, caption='Booming E-Commerce platforms during covid.')
 
     with col3:
@@ -428,7 +431,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
 
     fig.update_layout(height=900, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('#### With people stuck at home, the e-commerce industry should have proliferated during Covid. Did that actually happen?')
 
@@ -483,7 +486,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
     
 
     st.markdown('#')
-    st.markdown('<h2><span style="color:#083CA5">Online Services Sector</span></h2>',unsafe_allow_html=True)
+    st.markdown('<h2>Online Services Sector</h2>',unsafe_allow_html=True)
 
     st.markdown('#')
 
@@ -493,6 +496,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
         st.write("")
 
     with col2:
+        image = image.resize(newsize)
         st.image(image, caption='How covid shifted everything online, from learning to interaction etc.')
 
     with col3:
@@ -520,7 +524,7 @@ During the second wave the stock prices dipped again due to the fact that lockdo
 
     fig.update_layout(height=700, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('#### The pandemic shifted our entire world online. Online services must have made big money. Lets see how...')
 
@@ -551,7 +555,7 @@ Yet, overall the online services have greatly increased their overall value comp
 
 
     st.markdown('#')
-    st.markdown('<h2><span style="color:#083CA5">Airlines Sector</span></h2>',unsafe_allow_html=True)
+    st.markdown('<h2>Airlines Sector</h2>',unsafe_allow_html=True)
 
     st.markdown('#')
 
@@ -561,6 +565,7 @@ Yet, overall the online services have greatly increased their overall value comp
         st.write("")
 
     with col2:
+        image = image.resize(newsize)
         st.image(image, caption='How the airline industry crashed due to covid.')
 
     with col3:
@@ -587,7 +592,7 @@ Yet, overall the online services have greatly increased their overall value comp
 
     fig.update_layout(height=700, width=900)
     # fig.show()
-    st.write(fig)
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('#### With countries imposing travel restrictions, have airlines recovered till date?')
 
