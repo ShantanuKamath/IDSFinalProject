@@ -20,17 +20,18 @@ def covid_visualisations():
     country_df = pd.read_csv('../Data/usa_national_level_daily_new_covid_cases.csv')
     state_df = pd.read_csv('../Data/usa_state_level_daily_new_covid_cases.csv')
 
-    hy.subheader("Progression of covid cases with time across the US")
+    hy.subheader("How severe was the pandemic anyway?")
+    hy.markdown("""In order to see how badly the United States was affected by covid, we plotted a progression of covid cases with time arcoss the US""")
     fig = px.line(country_df, x="Date", y="Daily New Cases", title="Covid cases reported across the US")
     hy.write(fig)
-    hy.markdown("""We first plotted a progression of covid cases with time arcoss the US, and were able to clearly visualise that there were 2 waves of covid that had hit the US. 
+    hy.markdown("""From this graph we were able to clearly visualise that there were 2 waves of covid that had hit the US. 
     
 - The first wave starts its upward trend around 12th October, 2020. It is in its peak from 20th November 2020 to 22nd January 2021, and subsides by 18th February, 2021.
 - The second wave starts its upward trend around 20th July, 2021. It is in its peak from 18th August 2021 to 16th September 2021, and subsides by 18th October, 2021.
 
 We identify these as our time durations of interest and use them subsequently to understand how the stock market performed during these two peaks""")
 
-    hy.subheader("High level statewise analysis of covid cases")
+    hy.subheader("Which were the most notorious states when it comes to covid?")
     hy.markdown("""Once we had seen a high level view of the covid trend in the US, we wanted to how covid affected each state. We wanted to identify which states were the worst affected by covid, and which states were the least affected.
 For this we plotted a bar chart to visualise the total covid cases per state.""")
     state_cumulative = state_df.groupby(['State']).agg({'Daily New Cases':'sum'}).reset_index()
@@ -40,7 +41,7 @@ For this we plotted a bar chart to visualise the total covid cases per state."""
     hy.write(fig)
     hy.markdown("""From this barchart we were able to see that the state with the most number of covid cases was California, with 4.83 million cases. And the state with the least number of covid cases was Vermont with 43K cases.""")
 
-    hy.subheader("Granular statewise analysis of covid cases")
+    hy.subheader("Did all states peak at the same time?")
     hy.markdown("""Once we had a high level view of how each US state was affected by Covid, we decided to dig a little deeper and scrutanise the covid trends at a state level.
     We created an interactive plot which would help us compare the covid trends between 2 states. We use this as a means to analyse how the trends compare from one state to another, and if the states peaked at the same time or not""")
     states = np.unique(state_df['State'].values)
@@ -82,6 +83,8 @@ For this we plotted a bar chart to visualise the total covid cases per state."""
                     yaxis={"visible":True})
 
     hy.write(fig)
+    hy.markdown("""From this visualisation we were able to see that the covid trends were pretty uniform across the different states. While their timelines were
+    almost the same, some states were affected more than others. """)
 
 if __name__ == "__main__":
     covid_visualisations()
