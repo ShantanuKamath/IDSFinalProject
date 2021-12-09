@@ -8,6 +8,7 @@ from plotly.subplots import make_subplots
 from functools import reduce
 from PIL import Image
 
+@st.cache
 def stock_tab_main():
 
     dict_stock_to_company = {}
