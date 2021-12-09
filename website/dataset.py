@@ -15,7 +15,7 @@ def dataset():
     3. Covid vaccination data (official CDC website)  
 
 
-    All the 3 datasets were scrapped, explored, cleaned and then appropiately merged so that their interaction with each other could be studied. 
+    All the 3 datasets were scraped, explored, cleaned and then appropiately merged so that their interaction with each other could be studied. 
 
     In this section, we will explore the above mentioned datasets one by one and highlight how they were transformed into usable information.
     """)
@@ -43,7 +43,7 @@ def dataset():
 
     st.markdown("""
 
-    For downloading the data, we considered the time period from `2019-01-02` to `2021-11-18` so that the effect of covid could be cleary examined. Further, we take the ***Closing Price*** of the stocks as the representative value for the day.
+    For downloading the data, we considered the time period from `2019-01-02` to `2021-11-18` so that the effect of covid could be clearly examined. Further, we take the ***Closing Price*** of the stocks as the representative value for the day.
 
     Now that we have a way to download stock information, we move on to the next step - deciding which all stocks to consider :)
 
@@ -56,12 +56,12 @@ def dataset():
     - Online services  
     - Airlines  
 
-    Further, we also wanted to study how different companies in the same instry were affected by covid. To carry out this analysis, we selected the following companies in each industry-
+    Further, we also wanted to study how different companies in the same industry were affected by covid. To carry out this analysis, we selected the following companies in each industry-
 
 
     | Industry    | Company |
     | :-: | :-: |
-    | Transport      | Uber, Lift       |
+    | Transport      | Uber, Lyft       |
     | Hospitality   | AirBnB, Marriot, Hilton        |
     | Consumer Spending   | Visa, American Express, Mastercard        |
     | Commerce   | Amazon, Walmart, Costco        |
@@ -272,7 +272,7 @@ def dataset():
 
     st.markdown('#### 1. Data Completeness ')
     st.markdown("""
-    Data completeness is important to ensure that we don't miss any datap point and also that we don't make any inferencesw from partial data. This was taken care of for all the 3 datasets before proceeding. We have also highlighted how  missing data was handled for the stocks and covid vaccine datasets in the respective sections.
+    Data completeness is important to ensure that we don't miss any data point and also that we don't make any inferences from partial data. This was taken care of for all the 3 datasets before proceeding. We have also highlighted how  missing data was handled for the stocks and covid vaccine datasets in the respective sections.
     """)
 
     st.markdown('#### 2. Data Coherency ')
@@ -282,12 +282,12 @@ def dataset():
 
     st.markdown('#### 3. Data Correctness ')
     st.markdown("""
-    As we are working with real-life data, it was essential to check that the data is accurate. This is why a reliable source like Yahoo! Finance for staocks and CDC for covid related information were chosen over other sources on the internet. The values were also manually cross-checked for a few dates to ensure the correctness of the data.
+    As we are working with real-life data, it was essential to check that the data is accurate. This is why a reliable source like Yahoo! Finance for stocks and CDC for covid related information were chosen over other sources on the internet. The values were also manually cross-checked for a few dates to ensure the correctness of the data.
     """)
 
     st.markdown('#### 4. Data Accountability ')
     st.markdown("""
-    The stock data was collected from [Yahoo! Finance](https://finance.yahoo.com/), which is an online source well regarded for it's reliability and integrity. Similary, Covid related data was taken from the official (CDC)[https://data.cdc.gov] website.
+    The stock data was collected from [Yahoo! Finance](https://finance.yahoo.com/), which is an online source well regarded for it's reliability and integrity. Similarly, Covid related data was taken from the official (CDC)[https://data.cdc.gov] website.
     Also, as noted earlier, no modifications were made to the raw data to ensure that we don't color the subsequent analysis and inferences.
     """)
     
