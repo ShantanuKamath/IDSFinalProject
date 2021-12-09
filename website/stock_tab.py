@@ -70,9 +70,9 @@ def stock_tab_main():
     ## Beginning stock page images
 
 
-    image = Image.open('website/../Data/images/covid_stock_teaser.jpeg')
+    image = Image.open('website/artifacts/covid_stock_teaser.jpeg')
 
-    st.image(image, width=700)
+    st.image(image, use_column_width='always', caption='How the stock market plummeted due to covid.')
 
 
 
@@ -162,6 +162,20 @@ def stock_tab_main():
 
     st.markdown('#')
     st.markdown('<h2><span style="color:#083CA5">Transport Sector</span></h2>',unsafe_allow_html=True)
+    image = Image.open('website/artifacts/covid_transport_image.jpeg')
+    
+    st.markdown('#')
+
+    col1, col2, col3 = st.columns([2,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image(image, caption='Empty roads due to covid lockdowns.')
+
+    with col3:
+        st.write("")
 
 
     industry = 'Transport'
@@ -225,6 +239,20 @@ def stock_tab_main():
 
     st.markdown('#')
     st.markdown('<h2><span style="color:#083CA5">Hospitality Sector</span></h2>',unsafe_allow_html=True)
+    image = Image.open('website/artifacts/covid_hospitality_image.jpeg')
+    
+    st.markdown('#')
+
+    col1, col2, col3 = st.columns([2,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image(image, caption='Empty restaurant due to covid fear and restrictions.')
+
+    with col3:
+        st.write("")
 
     industry = 'Hospitality'
 
@@ -253,16 +281,18 @@ def stock_tab_main():
 
     st.markdown(""" For the hospitality industry we can see that once the first few cases of covid were reported in the US in early January 2020, the stock price of the hospitality industry fell because:
 
-      *  There was a negative sentiment amongst the people because of all the uncertainty around covid.
-      *  There were lockdowns enforced in different parts of the country because of which people were not travelling, and subsequently not staying in any hotels/Airbnbs.
+  *  There was a negative sentiment amongst the people because of all the uncertainty around covid.
+  *  There were lockdowns enforced in different parts of the country because of which people were not travelling, and subsequently not staying in any hotels/Airbnbs.
 
-    Towards the end of the first wave in February 2021, we can see that the stock prices increase once again. This is because lockdowns and travel restrictions started getting lifted across the US. People started travelling more, and staying in hotels/Airbnbs.
+#### What prompted recovery at a time when people were forced to stay at home?
+
+Towards the end of the first wave in February 2021, we can see that the stock prices increase once again. This is because lockdowns and travel restrictions started getting lifted across the US. People started travelling more, and staying in hotels/Airbnbs.
     An interesting trend that we note here is that the stock prices of Airbnb increased more that the stock prices of hotels like Marriott and Hilton. We hypothesise that this could be because of the following reasons: 
 
-    - Airbnb had just IPO'd hence their stock price was high because of the positive sentiments towards it.
-    - Also, this was at a time when most companies had switched to a remote work from home policy. As a result a lot of individuals started travelling to different places, and started working remotely while staying in airbnbs.
+- Airbnb had just IPO'd hence their stock price was high because of the positive sentiments towards it.
+- Also, this was at a time when most companies had switched to a remote work from home policy. As a result a lot of individuals started travelling to different places, and started working remotely while staying in airbnbs.
 
-    During the second wave the stock prices dipped again due to the fact that lockdowns and quarantine rules were enforced once again, leading to lesser travel and stay in hotels. Once again, once the second wave subsided, and lockdowns were lifted allowing to people to travel and stay in hotels, the stock prices increased.
+During the second wave the stock prices dipped again due to the fact that lockdowns and quarantine rules were enforced once again, leading to lesser travel and stay in hotels. Once again, once the second wave subsided, and lockdowns were lifted allowing to people to travel and stay in hotels, the stock prices increased.
     """)
     st.markdown("""
       <b><span style="font-size: 115%; color:#D71806">Interesting Articles:</span></b> <br>
@@ -274,6 +304,12 @@ def stock_tab_main():
             <p style="text-align:center;">McKinsey</p>
         </div>
       </a>
+      <a href="https://www.nbcnews.com/news/us-news/covid-hit-hotel-industry-hard-data-shows-it-s-still-n1280061">
+        <div style="float:left;margin-right:5px;">
+            <img src="https://i.guim.co.uk/img/media/7af5513c2f737babab0e27441d163a54ee477ed2/902_0_2730_1638/master/2730.jpg?width=1200&quality=85&auto=format&fit=max&s=44355715ee04094d1a9689bac70ab4ed" width="70" height="70">
+            <p style="text-align:center;">NBC News</p>
+        </div>
+      </a>
       </div>
 
       """, unsafe_allow_html=True)
@@ -281,15 +317,25 @@ def stock_tab_main():
 
 
     st.markdown('#')
-    st.markdown('#')
-
-    image = Image.open('website/../Data/images/covid_closed_image.jpg')
-
-    st.image(image, width=600)
+    
 
 
     st.markdown('#')
     st.markdown('<h2><span style="color:#083CA5">Consumer Spending</span></h2>',unsafe_allow_html=True)
+
+    image = Image.open('website/artifacts/covid_closed_image.jpg')
+    st.markdown('#')
+
+    col1, col2, col3 = st.columns([2,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image(image, caption='How covid led to businesses shutting down.')
+
+    with col3:
+        st.write("")
 
     industry = 'Consumer Spending'
 
@@ -319,19 +365,20 @@ def stock_tab_main():
     st.markdown(""" * The stock prices drop from around the 20th February 2020, when news of Covid-19 began to spread, and the first cases of Covid-19 were reported. The stock prices plummet and hit their lowest values around 23rd March 2020.
 
 
-    * Due to the lockdown in the US, the consumer and corporate spending was largely very low. This is reflected in the stock prices recovering very slowly from the initial drop.
+* Due to the lockdown in the US, the consumer and corporate spending was largely very low. This is reflected in the stock prices recovering very slowly from the initial drop.
 
 
-    * We see that the stocks begin to rise as the lockdown eased in July 2020. People and businesses started spending more and there was an increase in the econonmic activity.
+* We see that the stocks begin to rise as the lockdown eased in July 2020. People and businesses started spending more and there was an increase in the econonmic activity.
 
 
-    * When the first wave began around end of October 2020, stock prices for these companies fall suddenly. Businesses were forced to shut down or slow down, and consumers were forced to stay at home. Through the first wave, the stock prices remain relatively stagnant.
+* When the first wave began around end of October 2020, stock prices for these companies fell suddenly. Businesses were forced to shut down or slow down, and consumers were forced to stay at home. Through the first wave, the stock prices remain relatively stagnant.
+
+#### Did vaccination and the subsequent waves have a similar detrimental impact on business and spending?
+
+* As vaccination picks up starting February 2021, the stock prices continue to rise. Thus, vaccination instilled confidence in people, who began moving back to their pre-covid spending behavour.
 
 
-    * As vaccination picks up starting February 2021, the stock prices continue to rise. Thus, vaccination instilled confidence in people, who began moving back to their pre-covid spending behavour.
-
-
-    * With the second wave starting around July 2021, the stock prices again began to drop for Visa and Mastercard, reflecting the spending slowdown by consumers and corporates.
+* With the second wave starting around July 2021, the stock prices again began to drop for Visa and Mastercard, though not to the same extent as the initial hyteria and the first wave, reflecting the spending slowdown by consumers and corporates.
     """)
 
 
@@ -339,6 +386,20 @@ def stock_tab_main():
 
     st.markdown('#')
     st.markdown('<h2><span style="color:#083CA5">E-Commerce Sector</span></h2>',unsafe_allow_html=True)
+    image = Image.open('website/artifacts/covid_ecommerce_image.jpeg')
+    
+    st.markdown('#')
+
+    col1, col2, col3 = st.columns([2,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image(image, caption='Booming E-Commerce platforms during covid.')
+
+    with col3:
+        st.write("")
 
     industry = 'Commerce'
 
@@ -384,10 +445,10 @@ def stock_tab_main():
 
     st.markdown("""* An analysis of the plots reveal a visible dip in the stock prices of E-commerce giants during the months of March 2020. Historical analysis of the events indicate that this was the time when around 10 states confirmed their first cases including New York. Also interestingly during the week from March 9-15 the stock markets plummeted 7.79%. This explains the sudden dip observed during this time frame.
 
-    * Yet another such dip is observed in March 2021. This could be due to the increasing speculation of lockdown across states.
+* Yet another such dip is observed in March 2021. This could be due to the increasing speculation of lockdown across states.
 
-    * Some other interesting observations to note are that the e-commerce industry experienced a slight boom during the covid era, however the changes are not very significant. This is contrary to our intuition in which we expected a  positive investor outlook and subsequently a massive increase in e-commerce stocks as lockdowns and other restrictions would cause people to rely on e-commerce more.
-    * Also there seems to be no impact of vaccination on the changes in e-commerce stock prices """, unsafe_allow_html=True)
+* Some other interesting observations to note are that the e-commerce industry experienced a slight boom during the covid era, however the changes are not very significant. This is contrary to our intuition in which we expected a  positive investor outlook and subsequently a massive increase in e-commerce stocks as lockdowns and other restrictions would cause people to rely on e-commerce more.
+* Also there seems to be no impact of vaccination on the changes in e-commerce stock prices """, unsafe_allow_html=True)
 
     st.markdown("""
       <b><span style="font-size: 115%; color:#D71806">Interesting Articles:</span></b> <br>
@@ -414,15 +475,28 @@ def stock_tab_main():
             
 
     st.markdown('#')
-    st.markdown('#')
+    
+    image = Image.open('website/artifacts/covid_online_image.jpeg')
 
-    image = Image.open('website/../Data/images/covid_online_image.jpeg')
+    # st.image(image, use_column_width=True, caption='How covid shifted everything online, from learning to interaction etc.')
 
-    st.image(image, width=600)
-
+    
 
     st.markdown('#')
     st.markdown('<h2><span style="color:#083CA5">Online Services Sector</span></h2>',unsafe_allow_html=True)
+
+    st.markdown('#')
+
+    col1, col2, col3 = st.columns([2,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image(image, caption='How covid shifted everything online, from learning to interaction etc.')
+
+    with col3:
+        st.write("")
 
 
     industry = 'Online Services'
@@ -452,27 +526,45 @@ def stock_tab_main():
 
     st.markdown("""Since there is insufficient data for Coursera, we will be ignoring it in our analysis. Log transforming the data to show the data on a better scale.
 
-    With rise of covid cases in United States, Online Services stock value started rising significantly:
+With rise of covid cases in United States, Online Services stock value started rising significantly:
 
-       * All three of them provide great stock market boosts. As people spent more time at home (less travel time, more idle time), they turned to online platforms for entertainment as well as social interaction.
-       * Zoom especially became one of the go to video conferencing platforms adopted by educational institutes as well as corporates.
-       * Twitter played its role in providing a platform to share covid news and voice out opinions.
-       * Netflix provided a quick and fun way to take away boredom.
+   * All three of them provide great stock market boosts. As people spent more time at home (less travel time, more idle time), they turned to online platforms for entertainment as well as social interaction.
+   * Zoom especially became one of the go to video conferencing platforms adopted by educational institutes as well as corporates.
+   * Twitter played its role in providing a platform to share covid news and voice out opinions.
+   * Netflix provided a quick and fun way to take away boredom.
 
-    With the rollout of vaccines:
+With the rollout of vaccines:
 
-       * Twitter and Netflix were able to plateau or atleast rise a little.
-       * Zoom started showing a downward trend probably due to companies and people going back to making things in person.
+   * Twitter and Netflix were able to plateau or atleast rise a little.
+   * Zoom started showing a downward trend probably due to companies and people going back to making things in person.
 
-    Yet, overall the online services have greatly increased their overall value compared to precovid times. There was a consistent rise in value through out the start and end of various waves of covid.
-     """)
-
-
+Yet, overall the online services have greatly increased their overall value compared to precovid times. There was a consistent rise in value through out the start and end of various waves of covid.
+ """)
 
 
 
     st.markdown('#')
+    
+    image = Image.open('website/artifacts/covid_airline_image.jpeg')
+
+    # st.image(image, use_column_width=True, caption='How the airline industry crashed due to covid.')
+
+
+    st.markdown('#')
     st.markdown('<h2><span style="color:#083CA5">Airlines Sector</span></h2>',unsafe_allow_html=True)
+
+    st.markdown('#')
+
+    col1, col2, col3 = st.columns([2,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image(image, caption='How the airline industry crashed due to covid.')
+
+    with col3:
+        st.write("")
 
     industry = 'Airlines'
 
@@ -499,10 +591,15 @@ def stock_tab_main():
 
     st.markdown('#### With countries imposing travel restrictions, have airlines recovered till date?')
 
-    st.markdown("""Undoubtedly, the Airlines industry was hit the worst because of covid. Lockdowns, flight restrictions, travel bans meant people were not using airlines anymore, hence naturally their stock prices were expected to come down. Lets do a drill down of the above plot and note our observations: 
-       * We can see that ALL airlines stocks had a major fall in February 2020, and they have not been able to recover to their original glory since
-       * We also oberve that the stock prices started picking up pace around December 2020 -  January 2021, this can be accredited to the increase in vaccination (we see that the curve uphill begins around January 2021). Vaccination restored hope amongsts people that we might be able to fight off covid, hence deeply hit industries started to pick up again.
-       * We observe that all 3 - United Airlines, American Airlines, and Delta Airlines showed a similar trend, though in absolute terms the drop in United shares was the maximum.  """)
+    st.markdown("""Undoubtedly, the Airlines industry was hit the worst because of covid. Lockdowns, flight restrictions, travel bans meant people were not using airlines anymore, hence naturally their stock prices were expected to come down. Lets do a drill down of the above plot and note our observations:
+
+   * We can see that ALL airlines stocks had a major fall in February 2020, and they have not been able to recover to their original glory since
+
+#### Has vaccine rollout led to some sort of recovery for the industry?
+
+   * We oberve that the stock prices started picking up pace around December 2020 -  January 2021, this can be accredited to the increase in vaccination (we see that the curve uphill begins around January 2021). Vaccination restored hope amongsts people that we might be able to fight off covid, hence deeply hit industries started to pick up again.
+
+   * All 3 - United Airlines, American Airlines, and Delta Airlines showed a similar trend, though in absolute terms the drop in United shares was the maximum.  """)
 
 
     st.markdown("""
