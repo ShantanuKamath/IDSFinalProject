@@ -1,4 +1,4 @@
-import hydralit as hy
+import streamlit as st
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -10,20 +10,24 @@ from IPython.display import display, clear_output
 from datetime import date, datetime
 
 def vaccine_visualisations():
-    hy.header("Vaccination Distribution")
+    st.header("Vaccination Distribution")
 
-    hy.markdown("""Once we had taken a look at the prgression of covid cases in the US, we decided to analyse the vaccine distribution trends in the US. We wanted to see if the administration of vaccines
+    cols = st.columns(3)
+    cols[1].markdown("![Alt Text](https://media.giphy.com/media/n0KNIKsmIGcXoV3YTw/giphy.gif)")
+
+    st.markdown("""Once we had taken a look at the prgression of covid cases in the US, we decided to analyse the vaccine distribution trends in the US. We wanted to see if the administration of vaccines
     helped reduce the number of covid cases, and subsequently improve the sentiment amongst the people and have a positive impact on the stock market.
     In order to do this we compared between the vaccine administration per 100K population between two states""")
 
-    hy.subheader("Analysis of vaccine distribution across the US")
-    df1 = pd.read_csv('../Data/covid19_vaccination_data_US_full.csv')
+    st.text("")
+    st.subheader("Analysis of vaccine distribution across the US")
+    df1 = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
 
     df1 = df1[df1.Location != "US"]
     province_list = np.unique(df1['Location'].values)
 
-    prov = hy.selectbox('Enter a primary state',province_list, index=0)
-    comp_prov = hy.selectbox('Enter a secondary state for comparison',province_list, index=1)
+    prov = st.selectbox('Enter a primary state',province_list, index=0)
+    comp_prov = st.selectbox('Enter a secondary state for comparison',province_list, index=1)
 
 
     sorted_df = df1.copy()
@@ -59,11 +63,12 @@ def vaccine_visualisations():
                     yaxis_range=[0,200000],
                     yaxis={"visible":True})
 
-    hy.write(fig)
-    hy.markdown("""From this plot, we can clearly see that the Republic of Palau (RP) (which falls in the U.S. Pacific Islands) has the highest number of total vaccine doses administered per 100K population, followed by Vermont, and Puerto Rico. Marshall Islands (MH) and Federated States of Micronesia (FM) have the lowest numbers.""")
+    st.write(fig, use_container_width=True)
+    st.markdown("""From this plot, we can clearly see that the Republic of Palau (RP) (which falls in the U.S. Pacific Islands) has the highest number of total vaccine doses administered per 100K population, followed by Vermont, and Puerto Rico. Marshall Islands (MH) and Federated States of Micronesia (FM) have the lowest numbers.""")
 
-    hy.subheader("Analysis of Vaccine Administration Progress Across States")
-    vaccination_data = pd.read_csv('../Data/covid19_vaccination_data_US_full.csv')
+    st.text("")
+    st.subheader("Analysis of Vaccine Administration Progress Across States")
+    vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
     vaccination_data_grouped = vaccination_data.groupby(['Date','Location'],as_index=False).agg({"Admin_Per_100K":"sum","Distributed":"sum","Dist_Per_100K":"sum"})
 
     data_slider = []
@@ -89,8 +94,21 @@ def vaccine_visualisations():
     layout = dict(title ='Vaccination Administration Progress', geo=dict(scope='usa',projection={'type': 'albers usa'}),
                 sliders=sliders)
     fig =  go.Figure(data=data_slider, layout=layout)
-    hy.write(fig)
-    hy.markdown("""From this visualisation we are able to see that the vaccine administration was far more rapid in states such as Texas and North Dakota initially. A historical analysis reveals that Texas was infact the first state to reach 1 million vaccinations https://www.texastribune.org/2021/01/14/texas-coronavirus-vaccine-one-million/ Over time we see the vaccination rate across other states such as California and New York picking up while the vaccination rate across states that demonstrated early gains deteriorates""")
+    st.write(fig)
+    st.markdown("""From this visualisation we are able to see that the vaccine administration was far more rapid in states such as Texas and North Dakota initially. A historical analysis reveals that Texas was infact the first state to reach 1 million vaccinations. Over time we see the vaccination rate across other states such as California and New York picking up while the vaccination rate across states that demonstrated early gains deteriorates""")
+    st.markdown("""
+      <b><span style="font-size: 115%; color:#D71806">Interesting Articles:</span></b> <br>
+
+      <div class="image123">
+      <a href="https://www.texastribune.org/2021/01/14/texas-coronavirus-vaccine-one-million/">
+        <div style="float:left;margin-right:50px;margin-left:20px">
+            <img src="https://ggsc.s3.amazonaws.com/images/uploads/How_to_Be_Deliberate_About_Consuming_Coronavirus_News.jpg" width="70" height="70">
+            <p style="text-align:center;">Texas Tribune</p>
+        </div>
+      </a>
+      </div>
+
+      """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     vaccine_visualisations()
