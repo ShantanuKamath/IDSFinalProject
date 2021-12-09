@@ -7,6 +7,8 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 from gamebackend import StockGame
 from pathlib import Path
+import hydralit_components as hc
+import time
 
 company_to_ticker = {}
 company_to_ticker['United Airlines'] = 'UAL'
@@ -141,7 +143,7 @@ def show_stocks_trend(stocks, dates=None, st_object=None):
         merged_data = merged_data[merged_data['Date'].between(buy_date,sell_date)]
        
 
-    fig = make_subplots(rows=3, cols=1, subplot_titles=('Industry stock prices',  'Daily New Cases', 'Number of People Vaccinated Daily'), row_width=[0.3,0.3, 0.7])
+    fig = make_subplots(rows=3, cols=1, subplot_titles=('Industry stock prices',  'Daily New Cases', 'Number of People Vaccinated Daily'), row_width=[0.2,0.2, 0.7])
 
     df_required = merged_data[['Date'] + tickers]
     df_temp = pd.melt(df_required, id_vars=['Date'], value_vars=tickers).rename(columns={"variable": "Company", "value": "Stock Price"}).replace({"Company": ticker_to_company})
@@ -166,60 +168,86 @@ def show_stocks_trend(stocks, dates=None, st_object=None):
 
 
 def compute_results(leaderboard, game,username, stocks, dates, amounts):
+    # with hc.HyLoader('Computing your results....',hc.Loaders.pulse_bars,):
+    #     time.sleep(2)
+
     st.balloons()
     
     maximal_stock_price, minimal_stock_price, buy_date, sell_date, max_profit  = game.compute_optimal_profits(stocks,amounts)
     tickers_start, tickers_end = game.compute_user_outcomes(stocks,dates)
-    st.title("Your outcome")
     profits = []
+    unit_share = []
     user_buy_date, user_sell_date = dates
     user_buy_date_str = user_buy_date.strftime("%Y-%m-%d")
     user_sell_date_str = user_sell_date.strftime("%Y-%m-%d")
     user_dates = (user_buy_date_str,user_sell_date_str)
-    cols = st.columns([1 for _ in stocks]+[len(stocks)])
     for i in range(len(stocks)):
-        cols[i].write(stocks[i])
-        cols[i].metric(label="Stock Closing Price", value="{:.2f}".format(tickers_end[i]), delta="{:.2f} %".format((tickers_end[i]-tickers_start[i])*100/tickers_start[i]))
-        unit_share = amounts[i]/tickers_start[i]
-        cols[i].metric(label="No. of Shares", value="{:.3f}".format(unit_share))
-        cols[i].metric(label="Your Cost Price", value="{:.2f}".format(tickers_start[i]*unit_share))
-        profits.append(tickers_end[i]*unit_share-amounts[i])
-        cols[i].metric(label="Your Sell Price", value="{:.2f}".format(tickers_end[i]*unit_share), delta="{:.2f}".format(profits[i]))
+        unit_share.append(amounts[i]/tickers_start[i])
+        profits.append(tickers_end[i]*unit_share[i]-amounts[i])
 
-    show_stocks_trend(stocks, user_dates, cols[-1])
-    cols = st.columns(7)
     user_profit = sum(profits)
 
+    st.title("Your outcome")
+    cols = st.columns([1,2])
+
     if user_profit>=0:
-        cols[3].metric(label="Total Profit", value="{:.2f}$".format(user_profit))
+        cols[0].markdown("![Alt Text](https://media4.giphy.com/media/gauzBevJxeJHy/giphy.gif?cid=790b76115836c3f9551f027633df93d32903fac14836833d&rid=giphy.gif&ct=g)")
+        cols[1].subheader("YAY! You made a profit ${:.2f}!!!".format(user_profit))
+        argmax = profits.index(max(profits))
+        cols[1].subheader("Your best investment was with {} for ${}.".format(stocks[argmax], amounts[argmax]))
+        cols[1].subheader("You gained a whopping ${:.2f} on that itself".format(profits[argmax]))
     else:
-        cols[3].metric(label="Total Loss", value="{:.2f}$".format(user_profit))
+        cols[0].markdown("![Alt Text](https://media2.giphy.com/media/8nM6YNtvjuezzD7DNh/giphy.gif?cid=ecf05e47n40j7txvxmafq2om9dti1lhkzgb3yq2s21befm5s&rid=giphy.gif&ct=g)")
+        cols[1].subheader("Oh no! You lost ${:.2f}.".format(abs(user_profit)))
+        argmin = profits.index(min(profits))
+        cols[1].subheader("Your worst investment was with {} for ${}.".format(stocks[argmin], amounts[argmin]))
+        cols[1].subheader("You lost a whopping ${:.2f} on that itself!".format(profits[argmin]))
+
+    cols = st.columns([1 for _ in stocks]+[len(stocks)])
+    for i in range(len(stocks)):
+        cols[i].markdown(f"### {stocks[i]}")
+        cols[i].metric(label="Stock Closing Price", value="${:.2f}".format(tickers_end[i]), delta="{:.2f} %".format((tickers_end[i]-tickers_start[i])*100/tickers_start[i]))
+        cols[i].metric(label="No. of Shares", value="{:.3f}".format(unit_share[i]))
+        cols[i].metric(label="Your Cost Price", value="${:.2f}".format(tickers_start[i]*unit_share[i]))
+        cols[i].metric(label="Your Sell Price", value="${:.2f}".format(tickers_end[i]*unit_share[i]), delta="{:.2f}".format(profits[i]))
+
+    show_stocks_trend(stocks, user_dates, cols[-1])
+    
 
     st.title("Machine outcome")
-    st.subheader("You could have made a profit of  {:.2f}$ if you had bought the stock on ".format(max_profit)+buy_date+" and sold on "+sell_date+" !")
+    cols = st.columns([2,1])
+    cols[1].markdown("![Alt Text](https://media2.giphy.com/media/5VKbvrjxpVJCM/giphy.gif?cid=ecf05e47ixgbkwwe0p0tn1jd90vnzht2sycfiw1zz0k3r9u4&rid=giphy.gif&ct=g)")
+    cols[0].subheader("You could have made a profit of ${:.2f}!!".format(max_profit))
+    cols[0].subheader(f"Buy the stocks on {buy_date} and sell them on {sell_date}!!")
+    
+    # Put date analysis 
     cols = st.columns([len(stocks)]+[1 for _ in stocks])
-    profits = []
+    profits = []    
     optimal_dates = (buy_date, sell_date)
     for i in range(len(stocks)):
         cols[i+1].subheader(stocks[i])
-        cols[i+1].metric(label="Stock Closing Price", value="{:.2f}".format(maximal_stock_price[i]), delta="{:.2f} %".format((maximal_stock_price[i]-minimal_stock_price[i])*100/minimal_stock_price[i]))
+        cols[i+1].metric(label="Stock Closing Price", value="${:.2f}".format(maximal_stock_price[i]), delta="{:.2f} %".format((maximal_stock_price[i]-minimal_stock_price[i])*100/minimal_stock_price[i]))
         unit_share = amounts[i]/minimal_stock_price[i]
         cols[i+1].metric(label="No. of Shares", value="{:.3f}".format(unit_share))
-        cols[i+1].metric(label="Your Cost Price", value="{:.2f}".format(minimal_stock_price[i]*unit_share))
+        cols[i+1].metric(label="Your Cost Price", value="${:.2f}".format(minimal_stock_price[i]*unit_share))
         profits.append(maximal_stock_price[i]*unit_share-amounts[i])
-        cols[i+1].metric(label="Your Sell Price", value="{:.2f}".format(maximal_stock_price[i]*unit_share), delta="{:.2f}".format(profits[i]))
+        cols[i+1].metric(label="Your Sell Price", value="${:.2f}".format(maximal_stock_price[i]*unit_share), delta="${:.2f}".format(profits[i]))
     show_stocks_trend(stocks, optimal_dates, cols[0])
     cols = st.columns(7)
     total_profit = sum(profits)
     if total_profit>=0:
-        cols[3].metric(label="Total Profit", value="{:.2f}$".format(total_profit))
+        cols[3].metric(label="Total Profit", value="${:.2f}".format(total_profit))
     else:
-        cols[3].metric(label="Total Loss", value="{:.2f}$".format(total_profit))
+        cols[3].metric(label="Total Loss", value="${:.2f}".format(total_profit))
     
     now = datetime.now()
     submission_time = now.strftime("%d/%m/%Y %H:%M:%S")
     insert_entry(leaderboard,username,submission_time, user_profit)    
     rank, percentile = get_leaderboard_info(username,submission_time, total_profit)
+    if user_profit > 0:
+        st.subheader("Congratulations!!")
+    else:
+        st.subheader("Better luck next time!!")
     st.subheader("You did better than {:.2f} % other gamers!".format(percentile))
     st.subheader("This gives you a rank of {} on the leader board!".format(rank))
     cols = st.columns(7)
@@ -233,7 +261,7 @@ def get_leaderboard_info(username,submission_time, profit):
     total = len(leaderboard["submission time"].values)
     count = total - rank -1
     percentile = count*100//(total-1) if total!=1 else 100
-    print(percentile)
+    # print(percentile)
     return rank+1, percentile
     
 def display_leaderboard():
