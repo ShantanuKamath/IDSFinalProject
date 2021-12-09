@@ -16,8 +16,13 @@ def read_data():
     return df1
 
 @st.cache
-def draw_choropleth():
+def read_vaccination_data():
     vaccination_data = pd.read_csv('website/../Data/covid19_vaccination_data_US_full.csv')
+    return vaccination_data
+
+@st.cache
+def draw_choropleth():
+    vaccination_data = read_vaccination_data()
     vaccination_data_grouped = vaccination_data.groupby(['Date','Location'],as_index=False).agg({"Admin_Per_100K":"sum","Distributed":"sum","Dist_Per_100K":"sum"})
 
     data_slider = []
@@ -104,7 +109,7 @@ def vaccine_visualisations():
     st.subheader("Analysis of Vaccine Administration Progress Across States")
     
     fig = draw_choropleth()
-    
+
     st.plotly_chart(fig, use_container_width=True)   
     st.markdown("""From this visualisation we are able to see that the vaccine administration was far more rapid in states such as Texas and North Dakota initially. A historical analysis reveals that Texas was infact the first state to reach 1 million vaccinations. Over time we see the vaccination rate across other states such as California and New York picking up while the vaccination rate across states that demonstrated early gains deteriorates""")
     st.markdown("""
