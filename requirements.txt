@@ -3,3 +3,5 @@ pandas==1.2.5
 plotly==5.4.0
 ipywidgets==7.6.5
 ipython==7.27.0
+hydralit==1.0.10
+hydralit-components==1.0.6
