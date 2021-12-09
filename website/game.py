@@ -77,7 +77,7 @@ def init_game():
         cols = st.columns(3)
         cols[1].markdown("![Alt Text](https://media4.giphy.com/media/lSlqrcXKrdLRg8Zq5G/giphy.gif?cid=ecf05e47ykug7vv6n9pqqfktd4s4wit5ur69uunqbsysf6i8&rid=giphy.gif&ct=g)")
 
-        selected_stocks = st.multiselect("Select the stocks you want to build your portfolio with:", company_to_ticker.keys(), ['Amazon', 'Visa', 'Netflix', 'Marriot'])
+        selected_stocks = st.multiselect("Select the stocks you want to build your portfolio with:", company_to_ticker.keys(), ['Uber', 'Visa', 'Netflix', 'Marriot'])
 
     if selected_stocks:
         st.subheader("You have 100 dollars, use it wisely.")
@@ -114,7 +114,7 @@ def init_game():
 if __name__ == "__main__":
     init_game()
 
-def show_stocks_trend(stocks, dates=None):
+def show_stocks_trend(stocks, dates=None, st_object=None):
     tickers = list(map(company_to_ticker.get, stocks))
     df_stock = pd.read_csv('website/../Data/DailyStockData.csv')
     df_covid_vaccine = pd.read_csv('website/../Data/raw_vaccination/cleaned_vaccination_data.csv')
@@ -129,8 +129,7 @@ def show_stocks_trend(stocks, dates=None):
     merged_data = df_stock.merge(df_covid_vaccine, how='outer', left_index=True, right_index=True)
     merged_data = merged_data.tail(569)
     merged_data = merged_data.merge(df_covid_infection, how='outer', left_index=True, right_index=True).reset_index()
-    # if dates:
-        # do subset
+
     fig = make_subplots(rows=3, cols=1, subplot_titles=('Industry stock prices',  'Daily New Cases', 'Number of People Vaccinated Daily'), row_width=[0.3,0.3, 0.7])
 
     df_required = merged_data[['Date'] + tickers]
@@ -149,7 +148,10 @@ def show_stocks_trend(stocks, dates=None):
     fig.append_trace(fig3.data[0], row=3, col=1)
 
     fig.update_layout(height=500)
-    st.plotly_chart(fig, use_container_width=True)
+    if st_object:
+        st_object.plotly_chart(fig,use_container_width=True) 
+    else:
+        st.plotly_chart(fig, use_container_width=True)
 
 
 def compute_results(leaderboard, game,username, stocks, dates, amounts):
@@ -158,15 +160,17 @@ def compute_results(leaderboard, game,username, stocks, dates, amounts):
     maximal_stock_price, minimal_stock_price, buy_date, sell_date, max_profit  = game.compute_optimal_profits(stocks,amounts)
     tickers_start, tickers_end = game.compute_user_outcomes(stocks,dates)
     st.title("Your outcome")
-    cols = st.columns(len(stocks))
+    cols = st.columns([1 for _ in stocks]+[len(stocks)])
     for i in range(len(stocks)):
-        cols[i].subheader(stocks[i])
+        cols[i].write(stocks[i])
         cols[i].metric(label="Stock Closing Price", value="{:.2f}".format(tickers_end[i]), delta="{:.2f} %".format((tickers_end[i]-tickers_start[i])*100/tickers_start[i]))
         unit_share = amounts[i]/tickers_start[i]
         cols[i].metric(label="No. of Shares", value="{:.3f}".format(unit_share))
         cols[i].metric(label="Your Cost Price", value="{:.2f}".format(tickers_start[i]*unit_share))
         profits.append(tickers_end[i]*unit_share-amounts[i])
         cols[i].metric(label="Your Sell Price", value="{:.2f}".format(tickers_end[i]*unit_share), delta="{:.2f}".format(profits[i]))
+
+    show_stocks_trend(stocks, None, cols[-1])
     cols = st.columns(7)
     user_profit = sum(profits)
 
@@ -177,16 +181,17 @@ def compute_results(leaderboard, game,username, stocks, dates, amounts):
 
     st.title("Optimal outcome")
     st.subheader("You could have made a profit of  {:.2f}$ if you had bought the stock on ".format(max_profit)+buy_date+" and sold on "+sell_date+" !")
-    cols = st.columns(len(stocks))
+    cols = st.columns([len(stocks)]+[1 for _ in stocks])
     profits = []
     for i in range(len(stocks)):
-        cols[i].subheader(stocks[i])
-        cols[i].metric(label="Stock Closing Price", value="{:.2f}".format(maximal_stock_price[i]), delta="{:.2f} %".format((maximal_stock_price[i]-minimal_stock_price[i])*100/minimal_stock_price[i]))
+        cols[i+1].subheader(stocks[i])
+        cols[i+1].metric(label="Stock Closing Price", value="{:.2f}".format(maximal_stock_price[i]), delta="{:.2f} %".format((maximal_stock_price[i]-minimal_stock_price[i])*100/minimal_stock_price[i]))
         unit_share = amounts[i]/minimal_stock_price[i]
-        cols[i].metric(label="No. of Shares", value="{:.3f}".format(unit_share))
-        cols[i].metric(label="Your Cost Price", value="{:.2f}".format(minimal_stock_price[i]*unit_share))
+        cols[i+1].metric(label="No. of Shares", value="{:.3f}".format(unit_share))
+        cols[i+1].metric(label="Your Cost Price", value="{:.2f}".format(minimal_stock_price[i]*unit_share))
         profits.append(maximal_stock_price[i]*unit_share-amounts[i])
-        cols[i].metric(label="Your Sell Price", value="{:.2f}".format(maximal_stock_price[i]*unit_share), delta="{:.2f}".format(profits[i]))
+        cols[i+1].metric(label="Your Sell Price", value="{:.2f}".format(maximal_stock_price[i]*unit_share), delta="{:.2f}".format(profits[i]))
+    show_stocks_trend(stocks, None, cols[0])
     cols = st.columns(7)
     total_profit = sum(profits)
     if total_profit>=0:
