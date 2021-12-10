@@ -96,7 +96,7 @@ This is where we give you a chance to become the Wolf of Wall Street! Given $100
     st.text("")
 
     st.subheader("Video")
-    st.markdown("""The video presentation for our project can be found [here](https://github.com/ShantanuKamath/IDSFinalProject)""")
+    st.markdown("""The video presentation for our project can be found [here](https://youtu.be/Ro7mddMkD8w)""")
 
     st.text("")
     st.text("")
