@@ -152,7 +152,7 @@ def show_stocks_trend(stocks, dates=None, st_object=None):
     fig2 = px.bar(merged_data, x="Date", y="Daily New Cases")
     fig2.update_traces(marker_color="brown", marker_line_width = 0.05)
     fig3 = px.bar(merged_data, x="Date", y='Number of People Vaccinated Daily')
-    fig3.update_traces(marker_color="black", marker_line_width = 0.05)
+    fig3.update_traces(marker_color="lightskyblue", marker_line_width = 0.05)
     fig.update_layout(showlegend=False, hovermode='x')
 
     for tmp in fig1.data:
@@ -188,7 +188,7 @@ def compute_results(leaderboard, game,username, stocks, dates, amounts):
     user_profit = sum(profits)
 
     st.title("Your outcome")
-    cols = st.columns([1,2])
+    cols = st.columns([2,2])
 
     if user_profit>=0:
         cols[0].markdown("![Alt Text](https://media4.giphy.com/media/gauzBevJxeJHy/giphy.gif?cid=790b76115836c3f9551f027633df93d32903fac14836833d&rid=giphy.gif&ct=g)")
